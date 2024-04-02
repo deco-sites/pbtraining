@@ -17,7 +17,7 @@ export default function Section({ images, length = 3 }: Props) {
     <div className="flex flex-col justify-center items-center m-3 w-auto h-auto">
       {images
         .map((image) => (
-          <div className="w-fit max-h-[600px] m-4 justify-center overflow-hidden rounded-md">
+          <div className="w-fit h-fit m-4 justify-center rounded-md">
             <Picture>
               <Source
                 media="(max-width: 768px)"
@@ -33,7 +33,7 @@ export default function Section({ images, length = 3 }: Props) {
               />
               <img
                 src={image.desktop}
-                class="h-auto object-cover hover:scale-105 transition-all duration-500 cursor-pointer"
+                class="h-auto object-cover hover:scale-105 transition-all duration-500 cursor-pointer rounded-md"
               />
             </Picture>
           </div>

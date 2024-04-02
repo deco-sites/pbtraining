@@ -14,18 +14,23 @@ import Image from "apps/website/components/Image.tsx";
 import NavItem from "./NavItem.tsx";
 import { navbarHeight } from "./constants.ts";
 import { Buttons, Logo } from "../../components/header/Header.tsx";
-
+import TotalVotes from "../../islands/TotalVotes.tsx";
 // Make it sure to render it on the server only. DO NOT render it on an island
-function Navbar(
-  { items, searchbar, logo, buttons, logoPosition = "left", device }: {
-    items: SiteNavigationElement[];
-    searchbar?: SearchbarProps;
-    logo?: Logo;
-    buttons?: Buttons;
-    logoPosition?: "left" | "center";
-    device: "mobile" | "desktop" | "tablet";
-  },
-) {
+function Navbar({
+  items,
+  searchbar,
+  logo,
+  buttons,
+  logoPosition = "left",
+  device,
+}: {
+  items: SiteNavigationElement[];
+  searchbar?: SearchbarProps;
+  logo?: Logo;
+  buttons?: Buttons;
+  logoPosition?: "left" | "center";
+  device: "mobile" | "desktop" | "tablet";
+}) {
   const platform = usePlatform();
 
   // Mobile header
@@ -53,13 +58,18 @@ function Navbar(
         )}
 
         <div class="flex justify-end gap-1">
-          <SearchButton />
-          {platform === "vtex" && <CartButtonVTEX />}
-          {platform === "vnda" && <CartButtonVDNA />}
-          {platform === "wake" && <CartButtonWake />}
-          {platform === "linx" && <CartButtonLinx />}
-          {platform === "shopify" && <CartButtonShopify />}
-          {platform === "nuvemshop" && <CartButtonNuvemshop />}
+          <TotalVotes />
+          {!buttons?.hideSearchButton && <SearchButton />}
+          {!buttons?.hideCartButton && (
+            <div>
+              {platform === "vtex" && <CartButtonVTEX />}
+              {platform === "vnda" && <CartButtonVDNA />}
+              {platform === "wake" && <CartButtonWake />}
+              {platform === "linx" && <CartButtonLinx />}
+              {platform === "shopify" && <CartButtonShopify />}
+              {platform === "nuvemshop" && <CartButtonNuvemshop />}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -73,7 +83,9 @@ function Navbar(
           logoPosition === "left" ? "justify-center" : "justify-start"
         }`}
       >
-        {items.map((item) => <NavItem item={item} />)}
+        {items.map((item) => (
+          <NavItem item={item} />
+        ))}
       </ul>
       <div
         class={`flex ${
@@ -81,11 +93,7 @@ function Navbar(
         }`}
       >
         {logo && (
-          <a
-            href="/"
-            aria-label="Store logo"
-            class="block"
-          >
+          <a href="/" aria-label="Store logo" class="block">
             <Image
               src={logo.src}
               alt={logo.alt}
@@ -98,7 +106,8 @@ function Navbar(
       <div class="flex-none flex items-center justify-end gap-6 col-span-1">
         {!buttons?.hideSearchButton && (
           <div class="flex items-center text-xs font-thin gap-1">
-            <SearchButton />SEARCH
+            <SearchButton />
+            SEARCH
           </div>
         )}
 
@@ -130,6 +139,7 @@ function Navbar(
             WISHLIST
           </a>
         )}
+        <TotalVotes />
         {!buttons?.hideCartButton && (
           <div class="flex items-center text-xs font-thin">
             {platform === "vtex" && <CartButtonVTEX />}
