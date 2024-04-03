@@ -82,7 +82,7 @@ interface SectionProps {
 export async function loader(
   props: Props,
   _req: Request,
-  _ctx: unknown
+  _ctx: unknown,
 ): Promise<SectionProps> {
   const votesResponse = await fetch(
     `https://camp-api.deco.cx/event/${props.productId}`,
@@ -90,7 +90,7 @@ export async function loader(
       headers: {
         "x-api-key": "pbtraining",
       },
-    }
+    },
   );
   console.log(votesResponse);
   const totalVotes = (await votesResponse.json()) as ProductVotes;

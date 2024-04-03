@@ -7,7 +7,7 @@ export interface TotalVotes {
 export default async function loader(
   _props: unknown,
   _req: Request,
-  _ctx: FnContext
+  _ctx: FnContext,
 ): Promise<TotalVotes> {
   const votesResponse = await fetch("https://camp-api.deco.cx/events", {
     headers: {
