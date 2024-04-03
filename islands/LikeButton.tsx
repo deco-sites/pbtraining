@@ -1,21 +1,50 @@
-import { signal } from "@preact/signals";
+import { useSignal, useSignalEffect } from "@preact/signals";
 import { totalVotes } from "../sdk/useVotes.ts";
+import { invoke } from "deco-sites/pbtraining/runtime.ts";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
-const votes = {
-  voted: signal(false),
-  quantity: signal(0),
+const getTotalVotesProduct = async (productId: number) => {
+  const votes = await invoke[
+    "deco-sites/pbtraining"
+  ].loaders.recoverVoteProducts({ productId });
+  totalVotes.value = votes.product;
 };
 
-export default function Island() {
-  const vote = () => {
-    totalVotes.value++;
-    votes.voted.value = true;
-    votes.quantity.value++;
+export default function Island(props: {
+  productId: number;
+  initialVotes: number;
+}) {
+  const votesProduct = {
+    voted: useSignal(false),
+    quantity: useSignal(props.initialVotes),
+  };
+  useSignalEffect(() => {
+    const asyncFunction = () => {
+      setInterval(async () => {
+        await getTotalVotesProduct(props.productId);
+      }, 30000);
+    };
+    asyncFunction();
+  });
+
+  let votes = {
+    total: 0,
+    product: props.productId,
+  };
+  const vote = async () => {
+    if (IS_BROWSER) {
+      votes = await invoke["deco-sites/pbtraining"].actions.createVote(
+        props.productId
+      );
+    }
+    totalVotes.value = votes.total;
+    votesProduct.voted.value = true;
+    votesProduct.quantity.value = votes.product;
   };
 
   return (
     <div className="flex mb-2">
-      <button onClick={vote}>
+      <button onClick={vote} disabled={votesProduct.voted.value ? true : false}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
@@ -26,7 +55,7 @@ export default function Island() {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={{ display: !votes.voted.value ? "block" : "none" }}
+          style={{ display: !votesProduct.voted.value ? "block" : "none" }}
           className="icon icon-tabler icons-tabler-outline icon-tabler-mood-smile"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -45,7 +74,7 @@ export default function Island() {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={{ display: votes.voted.value ? "block" : "none" }}
+          style={{ display: votesProduct.voted.value ? "block" : "none" }}
           className="icon icon-tabler icons-tabler-outline icon-tabler-mood-check"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -56,7 +85,7 @@ export default function Island() {
           <path d="M15 19l2 2l4 -4" />
         </svg>
       </button>
-      <p className="from-neutral-700 ml-1">{votes.quantity.value}</p>
+      <p className="from-neutral-700 ml-1">{votesProduct.quantity.value}</p>
     </div>
   );
 }

@@ -2,13 +2,16 @@ import type { ImageWidget } from "apps/admin/widgets.ts";
 import { Picture, Source } from "apps/website/components/Picture.tsx";
 import { HTMLWidget as HTML } from "apps/admin/widgets.ts";
 import LikeButton from "../../islands/LikeButton.tsx";
-
+interface ProductVotes {
+  product: number;
+}
 interface Image {
   desktop: ImageWidget;
   mobile?: ImageWidget;
 }
 
 export interface Props {
+  productId: number;
   image: Image;
   title: string;
   description: HTML;
@@ -22,6 +25,24 @@ export interface Props {
     | "max-w-6xl"
     | "max-w-7xl"
     | "max-w-full";
+}
+
+interface SectionProps {
+  productId: number;
+  image: Image;
+  title: string;
+  description: HTML;
+  price: number;
+  maxScreenSize:
+    | "max-w-xl"
+    | "max-w-2xl"
+    | "max-w-3xl"
+    | "max-w-4xl"
+    | "max-w-5xl"
+    | "max-w-6xl"
+    | "max-w-7xl"
+    | "max-w-full";
+  initialVotes: number;
 }
 
 // export function ErrorFallback() {
@@ -58,13 +79,42 @@ export interface Props {
 //   );
 // }
 
+export async function loader(
+  props: Props,
+  _req: Request,
+  _ctx: unknown
+): Promise<SectionProps> {
+  const votesResponse = await fetch(
+    `https://camp-api.deco.cx/event/${props.productId}`,
+    {
+      headers: {
+        "x-api-key": "pbtraining",
+      },
+    }
+  );
+  console.log(votesResponse);
+  const totalVotes = (await votesResponse.json()) as ProductVotes;
+
+  console.log({
+    ...props,
+    initialVotes: totalVotes.product,
+  });
+
+  return {
+    ...props,
+    initialVotes: totalVotes.product,
+  };
+}
+
 export default function Section({
   image,
   title,
   description,
   price,
   maxScreenSize,
-}: Props) {
+  productId,
+  initialVotes,
+}: SectionProps) {
   return (
     <div className="flex flex-col justify-center items-center">
       <div
@@ -93,10 +143,10 @@ export default function Section({
         <div className="flex flex-col mt-3 md:mt-0 md:flex-row md:w-4/6">
           <div className="max-w-max mb-2 pl-2 md:w-2/3">
             <h1 className="text-xl font-bold mb-5">{title}</h1>
-            <LikeButton />
+            <LikeButton productId={productId} initialVotes={initialVotes} />
             <div
               id="1"
-              className="line-clamp-3 overflow-hidden"
+              className="line-clamp-3"
               dangerouslySetInnerHTML={{ __html: description }}
             />
           </div>

@@ -8,6 +8,7 @@ interface Image {
 }
 
 export interface Props {
+  /** @minItems 3 */
   images: Image[];
   length?: number;
 }
@@ -41,9 +42,9 @@ export default function Section({ images, length = 3 }: Props) {
         .splice(0, length)}
       <button
         className={images.length <= length ? "hidden" : "btn btn-outline"}
-        {...usePartialSection({
+        {...usePartialSection<typeof Section>({
           mode: "replace",
-          props: { length: length + 1 },
+          props: { images, length: length + 1 },
         })}
       >
         +
