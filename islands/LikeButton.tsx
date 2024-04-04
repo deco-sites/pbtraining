@@ -3,13 +3,6 @@ import { totalVotes } from "../sdk/useVotes.ts";
 import { invoke } from "deco-sites/pbtraining/runtime.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
-const getTotalVotesProduct = async (productId: number) => {
-  const votes = await invoke[
-    "deco-sites/pbtraining"
-  ].loaders.recoverVoteProducts({ productId });
-  totalVotes.value = votes.product;
-};
-
 export default function Island(props: {
   productId: number;
   initialVotes: number;
@@ -18,6 +11,14 @@ export default function Island(props: {
     voted: useSignal(false),
     quantity: useSignal(props.initialVotes),
   };
+
+  const getTotalVotesProduct = async (productId: number) => {
+    const votes = await invoke[
+      "deco-sites/pbtraining"
+    ].loaders.recoverVoteProducts({ productId });
+    votesProduct.quantity.value = votes.product;
+  };
+
   useSignalEffect(() => {
     const asyncFunction = () => {
       setInterval(async () => {
@@ -34,7 +35,7 @@ export default function Island(props: {
   const vote = async () => {
     if (IS_BROWSER) {
       votes = await invoke["deco-sites/pbtraining"].actions.createVote(
-        props.productId,
+        props.productId
       );
     }
     totalVotes.value = votes.total;

@@ -1,18 +1,15 @@
 import type { ImageWidget } from "apps/admin/widgets.ts";
 import { Picture, Source } from "apps/website/components/Picture.tsx";
+import Image from "apps/website/components/Image.tsx";
 import { HTMLWidget as HTML } from "apps/admin/widgets.ts";
 import LikeButton from "../../islands/LikeButton.tsx";
 interface ProductVotes {
   product: number;
 }
-interface Image {
-  desktop: ImageWidget;
-  mobile?: ImageWidget;
-}
 
 export interface Props {
   productId: number;
-  image: Image;
+  image: ImageWidget;
   title: string;
   description: HTML;
   price: number;
@@ -28,20 +25,7 @@ export interface Props {
 }
 
 interface SectionProps {
-  productId: number;
-  image: Image;
-  title: string;
-  description: HTML;
-  price: number;
-  maxScreenSize:
-    | "max-w-xl"
-    | "max-w-2xl"
-    | "max-w-3xl"
-    | "max-w-4xl"
-    | "max-w-5xl"
-    | "max-w-6xl"
-    | "max-w-7xl"
-    | "max-w-full";
+  initialProps: Props;
   initialVotes: number;
 }
 
@@ -82,7 +66,7 @@ interface SectionProps {
 export async function loader(
   props: Props,
   _req: Request,
-  _ctx: unknown,
+  _ctx: unknown
 ): Promise<SectionProps> {
   const votesResponse = await fetch(
     `https://camp-api.deco.cx/event/${props.productId}`,
@@ -90,29 +74,19 @@ export async function loader(
       headers: {
         "x-api-key": "pbtraining",
       },
-    },
+    }
   );
   console.log(votesResponse);
   const totalVotes = (await votesResponse.json()) as ProductVotes;
 
-  console.log({
-    ...props,
-    initialVotes: totalVotes.product,
-  });
-
   return {
-    ...props,
+    initialProps: props,
     initialVotes: totalVotes.product,
   };
 }
 
 export default function Section({
-  image,
-  title,
-  description,
-  price,
-  maxScreenSize,
-  productId,
+  initialProps: { image, title, description, price, maxScreenSize, productId },
   initialVotes,
 }: SectionProps) {
   return (
@@ -120,25 +94,15 @@ export default function Section({
       <div
         className={`flex flex-col md:flex-row justify-evenly ${maxScreenSize} pt-4 pb-4 max-w-4xl rounded-md md:max-h-[600px] m-8 overflow-hidden bg-gray-200`}
       >
-        <div className="w-auto md:w-2/6 ml-3 mr-2 flex justify-center h-min overflow-hidden rounded-md">
-          <Picture>
-            <Source
-              media="(max-width: 768px)"
-              src={image?.mobile ?? image.desktop}
-              width={300}
-              height={300}
+        <div className="w-auto md:w-2/6 ml-3 mr-2 flex justify-center h-min">
+          <div className="w-fit flex justify-center h-fit overflow-hidden rounded-md">
+            <Image
+              src={image}
+              class="hover:scale-105 ease-in duration-500 w-auto h-auto object-cover rounded-md"
+              width={192}
+              height={192}
             />
-            <Source
-              media="(min-width: 768px)"
-              src={image.desktop}
-              width={600}
-              height={600}
-            />
-            <img
-              src={image.desktop}
-              class="hover:scale-105 ease-in duration-500 w-auto h-auto object-cover"
-            />
-          </Picture>
+          </div>
         </div>
         <div className="flex flex-col mt-3 md:mt-0 md:flex-row md:w-4/6">
           <div className="max-w-max mb-2 pl-2 md:w-2/3">
@@ -153,7 +117,7 @@ export default function Section({
           <div className="border-l-lime-800 md:border-l ml-3 mr-3 justify-center flex flex-col md:items-center items-stretch md:w-2/6">
             <p className="font-bold m-2 text-center">{price} €</p>
             <button className="btn mt-2 border-neutral-500 shadow-slate-300 btn-success">
-              Finalizar compra
+              Acessar Produto
             </button>
           </div>
         </div>

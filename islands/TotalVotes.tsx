@@ -1,7 +1,6 @@
-import { IS_BROWSER } from "$fresh/runtime.ts";
 import { totalVotes } from "../sdk/useVotes.ts";
 import { invoke } from "deco-sites/pbtraining/runtime.ts";
-import { effect, useSignalEffect } from "@preact/signals";
+import { effect } from "@preact/signals";
 
 const getTotalVotes = async () => {
   const votes = await invoke["deco-sites/pbtraining"].loaders.recoverVotes();
