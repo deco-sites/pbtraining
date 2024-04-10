@@ -6,6 +6,7 @@ import * as $$$$$$$$$0 from "./actions/createVote.ts";
 import * as $$$$$$$$$$$0 from "./apps/decohub.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
 import * as $$$$$$$$0 from "./flags/multivariate/ProductDetailsPageFlag.ts";
+import * as $$$$$$$$1 from "./flags/multivariate/ProductFlag.ts";
 import * as $$$2 from "./loaders/availableIcons.ts";
 import * as $$$3 from "./loaders/icons.ts";
 import * as $$$0 from "./loaders/Layouts/ProductCard.tsx";
@@ -136,6 +137,7 @@ const manifest = {
   "flags": {
     "deco-sites/pbtraining/flags/multivariate/ProductDetailsPageFlag.ts":
       $$$$$$$$0,
+    "deco-sites/pbtraining/flags/multivariate/ProductFlag.ts": $$$$$$$$1,
   },
   "actions": {
     "deco-sites/pbtraining/actions/createVote.ts": $$$$$$$$$0,

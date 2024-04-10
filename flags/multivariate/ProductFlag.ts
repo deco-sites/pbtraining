@@ -3,13 +3,13 @@ import { MultivariateFlag } from "deco/blocks/flag.ts";
 import multivariate, {
   MultivariateProps,
 } from "apps/website/utils/multivariate.ts";
-import { ProductDetailsPage } from "apps/commerce/types.ts";
+import type { Product } from "apps/commerce/types.ts";
 
 /**
  * @title Props Variants
  */
-export default function ProductDetailsPageFlag(
-  props: MultivariateProps<ProductDetailsPage | null>,
-): MultivariateFlag<ProductDetailsPage | null> {
+export default function ProductFlag(
+  props: MultivariateProps<Product[] | null>
+): MultivariateFlag<Product[] | null> {
   return multivariate(props);
 }
