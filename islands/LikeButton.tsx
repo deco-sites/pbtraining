@@ -42,7 +42,7 @@ export default function Island(props: { productId: string }) {
   const vote = async () => {
     if (IS_BROWSER) {
       votes = await invoke["deco-sites/pbtraining"].actions.createVote(
-        props.productId
+        props.productId,
       );
     }
     totalVotes.value = votes.total;
