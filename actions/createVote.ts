@@ -4,7 +4,7 @@ interface Response {
 }
 
 export default async function action(
-  productId: number,
+  productId: string,
   _req: Request,
   _ctx: unknown,
 ): Promise<Response> {

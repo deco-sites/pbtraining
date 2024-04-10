@@ -1,6 +1,7 @@
 import { totalVotes } from "../sdk/useVotes.ts";
 import { invoke } from "deco-sites/pbtraining/runtime.ts";
 import { effect } from "@preact/signals";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
 const getTotalVotes = async () => {
   const votes = await invoke["deco-sites/pbtraining"].loaders.recoverVotes();
@@ -14,8 +15,10 @@ effect(() => {
       await getTotalVotes();
     }, 30000);
   };
-  asyncFunction();
-  totalVotes.value = totalVotes.peek();
+  if (IS_BROWSER) {
+    asyncFunction();
+    totalVotes.value = totalVotes.peek();
+  }
 });
 
 export default function Island() {

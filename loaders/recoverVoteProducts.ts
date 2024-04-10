@@ -5,7 +5,7 @@ interface ProductVotes {
 }
 
 export default async function loader(
-  props: { productId: number },
+  props: { productId: string },
   _req: Request,
   _ctx: FnContext,
 ): Promise<ProductVotes> {
