@@ -9,7 +9,7 @@ import type { Product } from "apps/commerce/types.ts";
  * @title Props Variants
  */
 export default function ProductFlag(
-  props: MultivariateProps<Product[] | null>
+  props: MultivariateProps<Product[] | null>,
 ): MultivariateFlag<Product[] | null> {
   return multivariate(props);
 }
