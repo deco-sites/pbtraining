@@ -10,11 +10,13 @@ function AddToCartButton({ seller, productID, eventParams }: Props) {
   const { addItems } = useCart();
   const onAddItem = () =>
     addItems({
-      orderItems: [{
-        id: productID,
-        seller: seller,
-        quantity: 1,
-      }],
+      orderItems: [
+        {
+          id: productID,
+          seller: seller,
+          quantity: 1,
+        },
+      ],
     });
 
   return <Button onAddItem={onAddItem} eventParams={eventParams} />;

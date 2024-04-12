@@ -38,9 +38,7 @@ const DESKTOP_COLUMNS = {
   5: "sm:grid-cols-5",
 };
 
-function ProductGallery(
-  { products, pageInfo, layout, offset, url }: Props,
-) {
+function ProductGallery({ products, pageInfo, layout, offset, url }: Props) {
   const platform = usePlatform();
   const mobile = MOBILE_COLUMNS[layout?.columns?.mobile ?? 2];
   const desktop = DESKTOP_COLUMNS[layout?.columns?.desktop ?? 4];
@@ -54,9 +52,7 @@ function ProductGallery(
   }
 
   return (
-    <div
-      class={`grid ${mobile} gap-2 items-center ${desktop} sm:gap-10`}
-    >
+    <div class={`grid ${mobile} gap-2 items-center ${desktop} sm:gap-10`}>
       {layout?.format == "Show More" && (
         <Head>
           {pageInfo.nextPage && <link rel="next" href={pageInfo.nextPage} />}
@@ -77,11 +73,9 @@ function ProductGallery(
         />
       ))}
 
-      {(layout && layout?.format === "Show More") && (
+      {layout && layout?.format === "Show More" && (
         <>
-          <ShowMore
-            pageInfo={pageInfo}
-          >
+          <ShowMore pageInfo={pageInfo}>
             {partialUrl && (
               <div>
                 <div class="mt-2">
@@ -92,7 +86,7 @@ function ProductGallery(
                   class="btn cursor-pointer hidden w-0 h-0 absolute"
                   {...usePartialSection({
                     href: partialUrl.href,
-                    mode: "append",
+                    mode: "replace",
                   })}
                 >
                   Show More

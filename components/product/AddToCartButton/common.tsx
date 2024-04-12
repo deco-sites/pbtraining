@@ -3,6 +3,7 @@ import { useState } from "preact/hooks";
 import Button from "../../../components/ui/Button.tsx";
 import { sendEvent } from "../../../sdk/analytics.tsx";
 import { useUI } from "../../../sdk/useUI.ts";
+import { toast, Bounce } from "react-toastify";
 
 export interface Props {
   /** @description: sku name */
@@ -22,6 +23,18 @@ const useAddToCart = ({ eventParams, onAddItem }: Props) => {
       setLoading(true);
 
       await onAddItem();
+
+      toast.success("Product added to cart", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
 
       sendEvent({
         name: "add_to_cart",
