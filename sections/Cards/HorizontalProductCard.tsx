@@ -1,6 +1,8 @@
 import Image from "apps/website/components/Image.tsx";
 import LikeButton from "../../islands/LikeButton.tsx";
 import type { Product } from "apps/commerce/types.ts";
+import { useOffer } from "deco-sites/pbtraining/sdk/useOffer.ts";
+import { formatPrice } from "deco-sites/pbtraining/sdk/format.ts";
 
 export interface HorizontalProductCardProps {
   products: Product[] | null;
@@ -20,54 +22,66 @@ export default function Section({
   maxScreenSize,
 }: HorizontalProductCardProps) {
   if (products?.length === 0 || products === null) {
-    return <></>;
-  } else {
-    const productId = products[0].productID;
-    const image = products[0].image && products[0].image[0].url;
-    const description = products[0].description;
-    const name = products[0].name;
-    const price = products[0].offers?.offers[0].price;
-    const url = products[0].url;
+    return <div></div>;
+  }
 
-    return productId && image && description && name && price && url
-      ? (
-        <div className="flex flex-col justify-center items-center">
-          <div
-            className={`flex flex-col md:flex-row justify-stretch ${maxScreenSize} pt-4 pb-4 rounded-md md:max-h-[600px] m-8 overflow-hidden bg-gray-200`}
-          >
-            <div className="w-auto md:w-1/3 ml-3 mr-2 flex justify-center h-min bg-green-700">
-              <div className="w-fit flex justify-center h-fit overflow-hidden rounded-md">
-                <Image
-                  src={image}
-                  class="hover:scale-105 ease-in duration-500 w-auto h-auto object-cover rounded-md"
-                  width={192}
-                  height={192}
-                />
-              </div>
+  const product = products[0];
+
+  const { productID, image, description, name, offers, url } = product;
+  const { listPrice, price, installments } = useOffer(offers);
+  const productImage = image?.[0]?.url;
+
+  return (
+    <div class="w-full flex flex-col justify-center items-center">
+      <div
+        class={`sm:w-[80%] flex flex-col sm:flex-row ${maxScreenSize} sm:gap-5 gap-2 p-4 rounded-sm sm:max-h-[600px] m-8 overflow-hidden bg-gray-200`}
+      >
+        <div class=" sm:w-[20%] lg:w-[30%]">
+          <Image
+            src={productImage as string}
+            class="md:hover:scale-105 ease-in duration-500 rounded-sm w-auto sm:w-full object-cover"
+            width={180}
+            height={120}
+          />
+        </div>
+        <div class="flex flex-col gap-3 sm:gap-0 items-start sm:flex-row w-full sm:h-[100px] lg:h-[150px] xl:h-[200px]">
+          <div class="flex flex-col gap-2 sm:gap-3 sm:w-[60%] w-full h-full">
+            <div class="flex flex-col lg:gap-2">
+              <h1 class="text-xl font-bold lg:text-[30px]">{name}</h1>
+              <LikeButton productId={productID} />
             </div>
-            <div className="flex flex-col justify-normal mt-3 md:mt-0 md:flex-row md:w-2/3 bg-green-200">
-              <div className="max-w-max mb-2 pl-2 md:w-2/3 bg-slate-800">
-                <h1 className="text-xl font-bold mb-5">{name}</h1>
-                <LikeButton productId={productId} />
-                <div
-                  id="1"
-                  className="line-clamp-3"
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </div>
-              <div className="border-l-lime-800 md:border-l ml-3 mr-3 justify-center items-stretch flex flex-col md:items-center md:w-1/3 bg-blue-700">
-                <p className="font-bold m-2 text-center">{price} €</p>
-                <a
-                  href={url}
-                  className="btn mt-2 border-neutral-500 shadow-slate-300 btn-success"
-                >
-                  Visitar Produto
-                </a>
-              </div>
+            <div
+              id="1"
+              class="line-clamp-3 sm:text-[16px] lg:text-[20px] font-medium"
+              dangerouslySetInnerHTML={{ __html: description as string }}
+            />
+          </div>
+          <div class="border-l-lime-800 sm:border-l flex flex-col sm:justify-between sm:items-start sm:w-[40%] sm:pl-4 w-full h-full">
+            <p class="font-bold text-[18px] sm:text-[22px] lg:text-[30px]">
+              {formatPrice(price, offers?.priceCurrency)}
+            </p>
+            <div class="cursor-pointer w-full">
+              <a
+                href={url}
+                class="btn mt-2 bg-primary rounded-sm cursor-pointer w-full sm:w-[85%] font-medium"
+              >
+                Visitar Produto
+              </a>
             </div>
           </div>
         </div>
-      )
-      : <></>;
-  }
+      </div>
+    </div>
+  );
+}
+
+export function LoadingFallback() {
+  return (
+    <div
+      style={{ margin: "auto", width: "80%" }}
+      class="w-full flex justify-center items-center"
+    >
+      <div class="skeleton sm:h-[120px] lg:h-[170px] xl:h-[220px] w-full"></div>
+    </div>
+  );
 }
