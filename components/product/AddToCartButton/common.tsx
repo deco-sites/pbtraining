@@ -3,7 +3,7 @@ import { useState } from "preact/hooks";
 import Button from "../../../components/ui/Button.tsx";
 import { sendEvent } from "../../../sdk/analytics.tsx";
 import { useUI } from "../../../sdk/useUI.ts";
-import { toast, Bounce } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 export interface Props {
   /** @description: sku name */

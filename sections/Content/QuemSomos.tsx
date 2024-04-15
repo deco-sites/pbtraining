@@ -1,5 +1,3 @@
-import { h } from "preact"; // Importação do Preact para JSX
-
 export interface Props {
   text?: Text[];
 }
