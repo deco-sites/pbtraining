@@ -33,7 +33,9 @@ const TitleSubtitleExtractor = ({ url }: TitleSubtitleExtractorProps) => {
 function formatCategoryList(categories: string[]) { // Explicitly typing the parameter
   if (categories.length > 1) {
     // Junta todos os elementos usando vírgula, exceto o último para usar 'e'
-    return `${categories.slice(0, -1).join(", ")} e ${categories[categories.length - 1]}`;
+    return `${categories.slice(0, -1).join(", ")} e ${
+      categories[categories.length - 1]
+    }`;
   } else if (categories.length === 1) {
     return categories[0];
   }
