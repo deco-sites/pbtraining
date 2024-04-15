@@ -2,6 +2,10 @@ import { asset } from "$fresh/runtime.ts";
 import type { JSX } from "preact";
 
 export type AvailableIcons =
+  | "TotalVotes"
+  | "Vote"
+  | "Voted"
+  | "Temperature"
   | "ArrowsPointingOut"
   | "Bars3"
   | "ChevronLeft"
