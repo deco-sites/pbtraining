@@ -8,6 +8,7 @@ import { useOffer } from "../../sdk/useOffer.ts";
 import type { ProductListingPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
+import TitleSubtitleExtractor from "../../islands/TitleSubtitleExtractor.tsx";
 
 export type Format = "Show More" | "Pagination";
 
@@ -70,6 +71,8 @@ function Result({
 
   return (
     <>
+      <TitleSubtitleExtractor url={_url} />
+
       <div class="container px-4 sm:py-10">
         {(isFirstPage || !isPartial) && (
           <SearchControls
