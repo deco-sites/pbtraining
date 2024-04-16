@@ -4,16 +4,16 @@ interface Response {
 }
 
 export default async function action(
-  productId: string,
+  props: { productId: string },
   _req: Request,
-  _ctx: unknown,
+  _ctx: unknown
 ): Promise<Response> {
   const votesResponse = await fetch("https://camp-api.deco.cx/event", {
     headers: {
       "x-api-key": "pbtraining",
     },
     body: JSON.stringify({
-      productId: productId,
+      productId: props.productId,
     }),
     method: "POST",
   });

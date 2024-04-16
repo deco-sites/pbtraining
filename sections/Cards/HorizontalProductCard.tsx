@@ -36,7 +36,7 @@ export default function Section({
       <div
         class={`sm:w-[80%] flex flex-col sm:flex-row ${maxScreenSize} sm:gap-5 gap-2 p-4 rounded-sm sm:max-h-[600px] m-8 overflow-hidden bg-gray-200`}
       >
-        <div class=" sm:w-[20%] lg:w-[30%]">
+        <div class=" sm:w-[20%] lg:w-[30%] overflow-hidden">
           <Image
             src={productImage as string}
             class="md:hover:scale-105 ease-in duration-500 rounded-sm w-auto sm:w-full object-cover"
@@ -63,7 +63,7 @@ export default function Section({
             <div class="cursor-pointer w-full">
               <a
                 href={url}
-                class="btn mt-2 bg-primary rounded-sm cursor-pointer w-full sm:w-[85%] font-medium"
+                class="btn mt-2 btn-primary rounded-sm cursor-pointer w-full sm:w-[85%] font-medium"
               >
                 Visitar Produto
               </a>

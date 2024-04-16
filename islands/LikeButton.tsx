@@ -11,23 +11,24 @@ export default function Island(props: { productId: string }) {
     quantity: useSignal(0),
   };
 
-  // const getTotalVotesProduct = async (productId: string) => {
-  //   const votes = await invoke[
-  //     "deco-sites/pbtraining"
-  //   ].loaders.recoverVoteProducts({ productId });
-  //   votesProduct.quantity.value = votes.product;
-  // };
+  const getTotalVotesProduct = async (productId: string) => {
+    const votes = await invoke[
+      "deco-sites/pbtraining"
+    ].loaders.recoverVoteProducts({ productId });
+    votesProduct.quantity.value = votes;
+  };
 
-  // useSignalEffect(() => {
-  //   const asyncFunction = () => {
-  //     setInterval(async () => {
-  //       await getTotalVotesProduct(props.productId);
-  //     }, 30000);
-  //   };
-  //   if (IS_BROWSER) {
-  //     asyncFunction();
-  //   }
-  // });
+  useSignalEffect(() => {
+    const asyncFunction = async () => {
+      await getTotalVotesProduct(props.productId);
+      setInterval(async () => {
+        await getTotalVotesProduct(props.productId);
+      }, 30000);
+    };
+    if (IS_BROWSER) {
+      asyncFunction();
+    }
+  });
 
   let votes = {
     total: 0,
@@ -36,9 +37,9 @@ export default function Island(props: { productId: string }) {
 
   const vote = async () => {
     if (IS_BROWSER) {
-      votes = await invoke["deco-sites/pbtraining"].actions.createVote(
-        props.productId
-      );
+      votes = await invoke["deco-sites/pbtraining"].actions.createVote({
+        productId: props.productId,
+      });
     }
 
     sendEvent({

@@ -24,7 +24,7 @@ const useAddToCart = ({ eventParams, onAddItem }: Props) => {
 
       await onAddItem();
 
-      toast.success("Product added to cart", {
+      toast.success("Produto adicionado ao carrinho", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
