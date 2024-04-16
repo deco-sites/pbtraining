@@ -6,7 +6,7 @@ interface Response {
 export default async function action(
   props: { productId: string },
   _req: Request,
-  _ctx: unknown
+  _ctx: unknown,
 ): Promise<Response> {
   const votesResponse = await fetch("https://camp-api.deco.cx/event", {
     headers: {

@@ -7,7 +7,7 @@ interface ProductVotes {
 export default async function loader(
   props: { productId: string },
   _req: Request,
-  _ctx: FnContext
+  _ctx: FnContext,
 ): Promise<number> {
   const votesResponse = await fetch(
     `https://camp-api.deco.cx/event/${props.productId}`,
@@ -15,7 +15,7 @@ export default async function loader(
       headers: {
         "x-api-key": "pbtraining",
       },
-    }
+    },
   );
 
   const totalVotes = (await votesResponse.json()) as ProductVotes;

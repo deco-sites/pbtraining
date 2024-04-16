@@ -78,10 +78,61 @@ export default function Section({
 export function LoadingFallback() {
   return (
     <div
-      style={{ margin: "auto", width: "80%" }}
+      style={{ margin: "auto", width: "80%", marginBottom: "2rem" }}
       class="w-full flex justify-center items-center"
     >
-      <div class="skeleton sm:h-[120px] lg:h-[170px] xl:h-[220px] w-full"></div>
+      <div class="sm:h-[120px] lg:h-[170px] xl:h-[220px] w-full md:w-[80%] flex flex-col sm:flex-row gap-5">
+        <div class="skeleton h-[300px] w-[80%] sm:h-[100px] sm:w-[100px] lg:h-[170px] lg:w-[170px] xl:h-[220px] xl:w-[220px]"></div>
+        <div class="flex flex-col md:flex-row w-[80%] gap-3 sm:gap-0">
+          <div class="w-[60%] flex flex-col gap-3 lg:gap-5">
+            <div class="skeleton h-5 lg:h-10 w-[200px] "></div>
+            <div class="skeleton h-5 lg:h-10  w-[30px] "></div>
+            <div class="skeleton h-5 lg:h-10 w-[200px]  "></div>
+          </div>
+          <div class="w-full sm:w-[40%] flex flex-col gap-3 sm:gap-0 justify-between">
+            <div class="skeleton h-5 lg:h-10 w-[200px]"></div>
+            <div class="skeleton h-[40px] lg:h-[70px] w-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ErrorFallback() {
+  return (
+    <div class="w-full flex flex-col justify-center items-center">
+      <div
+        class={`sm:w-[80%] flex flex-col sm:flex-row "max-w-7xl" sm:gap-5 gap-2 p-4 rounded-sm sm:max-h-[600px] m-8 overflow-hidden bg-gray-200`}
+      >
+        <div class="w-full flex items-center gap-5">
+          <div class=" sm:w-[20%] lg:w-[30%] overflow-hidden">
+            <img
+              loading="lazy"
+              width="180"
+              height="120"
+              src="/image/t-shirt.png"
+              alt="Download on the App Store"
+              class="md:hover:scale-105 ease-in duration-500 rounded-sm w-auto sm:w-full object-cover"
+            />
+          </div>
+          <div class="flex flex-col gap-3">
+            <h1 class="text-xl font-bold lg:text-[30px]">Camisa Polo</h1>
+            <p class="line-clamp-3 sm:text-[16px] lg:text-[20px] font-medium">
+              Camisa de cor preta estilo polo
+            </p>
+          </div>
+        </div>
+
+        <div class="cursor-pointer w-[80%]">
+          <a
+            href="/culturas"
+            class="btn mt-2 btn-primary rounded-sm cursor-pointer w-full sm:w-[85%] font-medium"
+          >
+            Para saber mais
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
