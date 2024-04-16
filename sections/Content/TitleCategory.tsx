@@ -1,12 +1,9 @@
-
 export const loader = (_props: unknown, req: Request) => {
   const url = new URL(req.url);
   const pathName = url.pathname;
   const pathArray = pathName.split("/");
   const length = pathArray.length;
-  const lastPath = pathArray[length-1];
-  console.log("LASTPATH", lastPath);
-  console.log("URL", pathName);
+  const lastPath = pathArray[length - 1];
   return {
     title: lastPath,
   };

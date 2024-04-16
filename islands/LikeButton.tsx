@@ -37,7 +37,7 @@ export default function Island(props: { productId: string }) {
   const vote = async () => {
     if (IS_BROWSER) {
       votes = await invoke["deco-sites/pbtraining"].actions.createVote(
-        props.productId,
+        props.productId
       );
     }
 
@@ -53,7 +53,7 @@ export default function Island(props: { productId: string }) {
     totalVotes.value = votes.total;
     votesProduct.voted.value = true;
     votesProduct.quantity.value = votes.product;
-    toast.success("Thank you for the vote", {
+    toast.success("Obrigado pelo voto!", {
       position: "top-right",
       autoClose: 4000,
       hideProgressBar: false,

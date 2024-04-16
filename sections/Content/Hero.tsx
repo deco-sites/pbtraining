@@ -35,11 +35,11 @@ export default function HeroFlats({
     <div>
       <div class="mx-auto flex flex-col items-center gap-8">
         <div
-          class={`flex w-full xl:container xl:mx-auto py-20 mx-5 md:mx-10 z-10 ${
+          class={`flex w-full xl:container xl:mx-auto py-5 mx-5 md:mx-10 z-10 ${
             image
               ? PLACEMENT[placement]
               : "flex-col items-center justify-center text-center"
-          } lg:py-36 gap-12 md:gap-20 items-center`}
+          } lg:py-10 lg:px-5 gap-12 md:gap-20 items-center`}
         >
           {image && (
             <Image
@@ -65,8 +65,7 @@ export default function HeroFlats({
               dangerouslySetInnerHTML={{
                 __html: title,
               }}
-            >
-            </div>
+            ></div>
             <p class="text-zinc-400 text-[16px] md:text-[18px] leading-[150%]">
               {description}
             </p>
@@ -83,8 +82,7 @@ export default function HeroFlats({
                       : "bg-accent text-black"
                   }`}
                 >
-                  <span class="ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-10 transition-all duration-1000 group-hover:-translate-x-40">
-                  </span>
+                  <span class="ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 transform bg-white opacity-10 transition-all duration-1000 group-hover:-translate-x-40"></span>
                   <span class="relative font-medium lg:text-[20px]">
                     {item?.text}
                   </span>

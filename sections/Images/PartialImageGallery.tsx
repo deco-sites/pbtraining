@@ -15,7 +15,7 @@ export interface Props {
 
 export default function Section({ images, length = 3 }: Props) {
   return (
-    <div className="flex flex-col justify-center items-center m-3 w-auto h-auto">
+    <div className="flex flex-col justify-center items-center m-3 w-auto h-auto py-5">
       {images
         .map((image) => (
           <div className="w-fit h-fit m-4 justify-center rounded-md">

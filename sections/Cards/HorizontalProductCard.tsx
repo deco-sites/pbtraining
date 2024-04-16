@@ -28,7 +28,7 @@ export default function Section({
   const product = products[0];
 
   const { productID, image, description, name, offers, url } = product;
-  const { listPrice, price, installments } = useOffer(offers);
+  const { price } = useOffer(offers);
   const productImage = image?.[0]?.url;
 
   return (

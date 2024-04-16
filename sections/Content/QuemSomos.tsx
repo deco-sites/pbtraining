@@ -37,7 +37,7 @@ export default function QuemSomos({
   ],
 }: Props) {
   return (
-    <div class="max-w-7xl mx-auto py-10 pb-24 grid grid-cols-1 gap-6">
+    <div class="max-w-5xl mx-5 lg:mx-auto py-5 pb-24 grid grid-cols-1 gap-6">
       {text.map((item, index) => (
         <div
           key={index}
@@ -48,13 +48,11 @@ export default function QuemSomos({
           }`}
         >
           <h3
-            class={`text-gray-800 font-bold text-2xl mb-2 uppercase`}
+            class={`text-gray-800 font-bold text-base md:text-xl mb-2 uppercase`}
           >
             {item.title}
           </h3>
-          <p class="text-gray-800 text-base">
-            {item.content}
-          </p>
+          <p class="text-gray-800 text-sm md:text-base">{item.content}</p>
         </div>
       ))}
     </div>
